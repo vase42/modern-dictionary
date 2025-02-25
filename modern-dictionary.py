@@ -82,17 +82,22 @@ Examples:
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Get definitions from Urban Dictionary.",add_help=False)  # Disable default help
+    parser = argparse.ArgumentParser(description="Get definitions from Modern Dictionary.", add_help=False)
     parser.add_argument("-r", "--random", action="store_true", help="Return a random word definition")
-    parser.add_argument("-h", "--help", action="store_true", help="Show help message")  # Custom help flag
-    parser.add_argument("word", nargs="?", default=None, help="The word to define")
+    parser.add_argument("-h", "--help", action="store_true", help="Show help message")
+    parser.add_argument("word", nargs="*", default=None, help="The word to define (can be multiple words)")
     args = parser.parse_args()
+
+    if args.word:
+        word_to_define = ' '.join(args.word)
+    else:
+        word_to_define = None
 
     if random.randint(1, 100) > 3:
         if args.random:
             getWord("yyy")
         elif args.word:
-            getWord(args.word)
+            getWord(word_to_define)
         elif args.help:
             print_help()
         else:
